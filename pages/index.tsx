@@ -9,7 +9,7 @@ const Home: NextPage = () => {
     <>
       <div className='mt-4 flex flex-col gap-10 overflow-auto h-[88vh] flex-1'>
         <div className='px-5 my-10 sm:grid md:grid-cols-2 xl:grid-cols-3 3xl:flex flex-wrap gap-5 justify-center'>
-          <Link href="/">
+          <Link href="/enLogoTyping">
             <div className='bg-gray-300 overflow-hidden p-2 border-black border group cursor-pointer transition duration-200 ease-in transform sm:hover:scale-105 hover:z-50'>
               <Image
                   layout='responsive'
