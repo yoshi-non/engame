@@ -1,1 +1,37 @@
 @font-face {font-family: "Arial Monospaced MT Std"; src: url("//db.onlinewebfonts.com/t/91d14999da03bdac85d7513115e41402.eot"); src: url("//db.onlinewebfonts.com/t/91d14999da03bdac85d7513115e41402.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/91d14999da03bdac85d7513115e41402.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/91d14999da03bdac85d7513115e41402.woff") format("woff"), url("//db.onlinewebfonts.com/t/91d14999da03bdac85d7513115e41402.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/91d14999da03bdac85d7513115e41402.svg#Arial Monospaced MT Std") format("svg"); }
+.enLogoTitle {
+  width: 20ch;
+  font: bold 200% Consolas, Monaco, monospace;
+  overflow: hidden;
+  white-space: nowrap;
+  font-weight: 400;
+  border-right: 2px solid transparent;
+  animation: typing 3s steps(20), caret 0.3s steps(1) infinite;
+}
+
+@keyframes typing {
+    from {
+      width: 0;
+    }
+}
+@keyframes caret {
+    50% {
+      border-right-color: currentColor;
+    }
+}
+
+.enLogoStart{
+  animation: flash 1.5s linear infinite;
+}
+
+@keyframes flash {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
