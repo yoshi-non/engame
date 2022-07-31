@@ -36,12 +36,14 @@ const enLogoTyping = () => {
   //   }
   // }
 
-  let k = 0
-  const [data, setData] = useState(logoData)
-  // 問題の画像
-  const [answerImg, setAnswerImg] = useState(data[k].thumbnail.url)
-  // 答えのテキスト
-  const [answerText, setAnswerText] = useState(data[k].name)
+  const [dataCount, setDataCount] = useState(0)
+  const data = logoData
+
+  const answerImgData = data.map(item => item["url"])
+  let answerImg = answerImgData[dataCount]
+
+  const answerTextData = data.map(item => item["name"])
+  let answerText = answerTextData[dataCount]
   // 現在入力しているテキスト
   const [currentText, setCurrentText] = useState("")
   // 現在入力している位置
@@ -61,13 +63,11 @@ const enLogoTyping = () => {
       // 全ての文字を入力し終わったとき
       if (position === answerText.length - 1) {
         // 次の問題を表示
-        k ++
-        setAnswerImg(data[k].thumbnail.url)
-        setAnswerText(data[k].name)
+        setDataCount(dataCount + 1)
+        answerImg = answerImgData[dataCount]
+        answerText = answerImgData[dataCount]
         setCurrentText("")
         setPosition(0)
-        console.log(k)
-        console.log(data[k])
       }
     }
   }
