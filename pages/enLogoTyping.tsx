@@ -37,6 +37,35 @@ const enLogoTyping = () => {
     }
   }
 
+  // 表示する文字
+  const [text, setText] = useState("text text")
+  // 現在入力している位置
+  const [position, setPosition] = useState(0)
+
+  const playingKeyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const key = e.key;
+    // 文字の配列を取得
+    let textSpans = document.querySelector("#textbox")!.children;
+    // 入力したキーと現在入力しようとしている文字が一致するとき
+    if (key === text[position]) {
+    // 現在の文字を入力済とする
+    textSpans[position].classList.add("typed-letters");
+    textSpans[position].classList.remove("current-letter");
+    // まだ入力していない文字があるとき
+    if (position <= text.length - 2) {
+      // 次の位置へ移動
+      textSpans[position + 1].className = "current-letter";
+      setPosition(position + 1);
+      // 全ての文字を入力し終わったとき    
+    } else {
+      // 入力不可にする
+      console.log("hello")
+    }
+    }
+  }
+
+  
+
   return (
     <div className='relative w-full h-[700px] overflow-hidden'>
         <LogoTypingBg/>
@@ -51,8 +80,11 @@ const enLogoTyping = () => {
         {/* {(secs == 0 && gameTime) && ( */}
           {/* // ゲーム開始カウントダウン(secs) == 0 && ゲーム時間(gameTime) > 0
           // ゲームが始まっているとき */}
-          <div className='absolute w-full h-[700px] text-[2.5rem] font-medium text-white z-3 top-0'>
-            {/* <p>{gameTime}</p> */}
+          <div 
+            className='absolute w-full h-[700px] text-[2.5rem] font-medium text-white z-3 top-0'
+            onKeyDown={playingKeyDownHandler}
+            tabIndex={0}
+          >
             <div className='flex justify-between items-center p-4'>
               <div>あと&nbsp;<span className='text-[3.4rem]'>40</span>問</div>
               <div>残り&nbsp;<span className='text-[3.4rem]'>60</span>秒</div>
@@ -65,7 +97,18 @@ const enLogoTyping = () => {
                 className="object-cover"
                 alt="LOGO"
               />
-              <div className='mt-10 text-white'>{data[0].name}</div>
+
+              <div id="textbox" className='mt-10 text-white'>
+                <span className='typed-letters'>{text[0]}</span>
+                {text
+                  .split("")
+                  .slice(1)
+                  .map(char => (
+                    <span className="waiting-letters">{char}</span>
+                  ))
+                }
+              </div>
+
             </div>
           </div>
          {/* )} */}
