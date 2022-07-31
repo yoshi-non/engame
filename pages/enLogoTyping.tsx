@@ -4,63 +4,71 @@ import LogoTypingBg from '../components/LogoTypingBg'
 import logoData from "../logoData"
 
 const enLogoTyping = () => {
+
+  // const [secs, setSeconds] = useState(0);
+  // const [gameTime, setGameTime] = useState<number | null>(null)
+  // useEffect(() => {
+  //   let sampleInterval = setInterval(() => {
+  //     if (secs > 0) {
+  //       setSeconds(secs - 1)
+  //     }
+  //     if (gameTime) {
+  //       setGameTime(gameTime - 1)
+  //     }
+  //     if (secs === 0) {
+  //       clearInterval(sampleInterval)
+  //     }
+  //     if (gameTime === 0) {
+  //       setGameTime(null)
+  //       clearInterval(sampleInterval)
+  //     }
+  //   }, 1000);
+  //   return () => {
+  //     clearInterval(sampleInterval)
+  //   }
+  // })
+
+  // const keyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  //   const key = e.code;
+  //   if (key === 'Space') {
+  //     setSeconds(5)
+  //     setGameTime(60 + 5)
+  //   }
+  // }
+
+  let k = 0
   const [data, setData] = useState(logoData)
-
-  const [secs, setSeconds] = useState(0);
-  const [gameTime, setGameTime] = useState<number | null>(null)
-  useEffect(() => {
-    let sampleInterval = setInterval(() => {
-      if (secs > 0) {
-        setSeconds(secs - 1)
-      }
-      if (gameTime) {
-        setGameTime(gameTime - 1)
-      }
-      if (secs === 0) {
-        clearInterval(sampleInterval)
-      }
-      if (gameTime === 0) {
-        setGameTime(null)
-        clearInterval(sampleInterval)
-      }
-    }, 1000);
-    return () => {
-      clearInterval(sampleInterval)
-    }
-  })
-
-  const keyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    const key = e.code;
-    if (key === 'Space') {
-      setSeconds(5)
-      setGameTime(60 + 5)
-    }
-  }
-
-  // 表示する文字
-  const [text, setText] = useState("text text")
+  // 問題の画像
+  const [answerImg, setAnswerImg] = useState(data[k].thumbnail.url)
+  // 答えのテキスト
+  const [answerText, setAnswerText] = useState(data[k].name)
+  // 現在入力しているテキスト
+  const [currentText, setCurrentText] = useState("")
   // 現在入力している位置
   const [position, setPosition] = useState(0)
-
+  
   const playingKeyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    const key = e.key;
-    // 文字の配列を取得
-    let textSpans = document.querySelector("#textbox")!.children;
+    const key = e.key
     // 入力したキーと現在入力しようとしている文字が一致するとき
-    if (key === text[position]) {
-    // 現在の文字を入力済とする
-    textSpans[position].classList.add("typed-letters");
-    textSpans[position].classList.remove("current-letter");
-    // まだ入力していない文字があるとき
-    if (position <= text.length - 2) {
-      // 次の位置へ移動
-      textSpans[position + 1].className = "current-letter";
-      setPosition(position + 1);
-      // 全ての文字を入力し終わったとき    
-    } else {
-      // 入力不可にする
-      console.log("hello")
-    }
+    if (key === answerText[position]) {
+      // 現在の文字を入力済とする
+      setCurrentText(currentText + key)
+      // まだ入力していない文字があるとき
+      if (position <= answerText.length - 2) {
+        // 次の位置へ移動
+        setPosition(position + 1)
+      }  
+      // 全ての文字を入力し終わったとき
+      if (position === answerText.length - 1) {
+        // 次の問題を表示
+        k ++
+        setAnswerImg(data[k].thumbnail.url)
+        setAnswerText(data[k].name)
+        setCurrentText("")
+        setPosition(0)
+        console.log(k)
+        console.log(data[k])
+      }
     }
   }
 
@@ -91,23 +99,14 @@ const enLogoTyping = () => {
             </div>
             <div className='flex flex-col justify-center items-center mt-10'>
               <Image
-                src={data[0].thumbnail.url}
+                src={answerImg}
                 width={180}
                 height={180}
                 className="object-cover"
                 alt="LOGO"
               />
 
-              <div id="textbox" className='mt-10 text-white'>
-                <span className='typed-letters'>{text[0]}</span>
-                {text
-                  .split("")
-                  .slice(1)
-                  .map(char => (
-                    <span className="waiting-letters">{char}</span>
-                  ))
-                }
-              </div>
+              <div className='mt-10 text-[3rem] text-white'>{currentText}</div>
 
             </div>
           </div>
