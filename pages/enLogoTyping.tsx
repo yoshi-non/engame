@@ -160,7 +160,7 @@ const enLogoTyping = () => {
             <div className='text-center mb-10'>
               <div
                 id='modal'
-                className='cursor-pointer bg-black shadow-[#0f5] tracking-widest shadow text-white bg-opacity-75 rounded-full px-7 py-3 mb-10'
+                className='cursor-pointer bg-black shadow-[#0f5] tracking-widest shadow text-white bg-opacity-75 rounded-full px-7 py-3 mb-10 hover:opacity-70'
                 onClick={openModal}
               >
                 遊び方
@@ -174,18 +174,18 @@ const enLogoTyping = () => {
                   <div className='flex flex-col gap-10 justify-center items-center'>
                     <p>エンジニアならよく見かけるロゴの読み方を当ててタイピングするゲームです。</p>
                     <p className='text-center text-white bg-[#0e5f1c] px-7 py-3 rounded'>
-                      全40で制限時間は60秒です
+                      全30問で制限時間は60秒です
                     </p>
                     <p>
                       ゲーム中は「ESCキー」でタイトルに戻ります。<br />
                       「Spaceキー」で始められます。
                     </p>
-                    <button onClick={closeModal} className="text-white bg-[#3f403f73] px-5 py-3 rounded-full">閉じる</button>
+                    <button onClick={closeModal} className="text-white bg-[#3f403f73] px-5 py-3 rounded-full hover:opacity-70">閉じる</button>
                   </div>
                 </div>
               </Modal>
 
-              <div className='cursor-pointer bg-black shadow-[#0f5] tracking-widest shadow text-white bg-opacity-75 rounded-full px-7 py-3 mb-10'>
+              <div className='cursor-pointer bg-black shadow-[#0f5] tracking-widest shadow text-white bg-opacity-75 rounded-full px-7 py-3 mb-10 hover:opacity-70'>
                 設定
               </div>
             </div>
