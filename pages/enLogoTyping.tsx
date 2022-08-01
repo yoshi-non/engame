@@ -46,15 +46,22 @@ const enLogoTyping = () => {
   const [position, setPosition] = useState(0)  
   
   const keyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
-
     if (secs === 0 && !gameTime) {
       if (e.code === 'Space') {
-        setSeconds(5)
-        setGameTime(60 + 5)
+        setIsOpen(false)
+        setSeconds(3)
+        setGameTime(60 + 3)
       }
     }
 
     if (secs === 0 && gameTime) {
+      // ゲーム中断
+      if (e.code === 'Escape') {
+        setGameTime(null)
+        setCurrentText("")
+        setPosition(0)
+        setDataCount(0)
+      }
       // 入力したキーと現在入力しようとしている文字が一致するとき
       if (e.key === answerText[position]) {
         // 現在の文字を入力済とする
@@ -74,6 +81,7 @@ const enLogoTyping = () => {
           } else {
             // 次の問題がないとき終了
             setGameTime(null)
+            setDataCount(0)
           }
           setCurrentText("")
           setPosition(0)
