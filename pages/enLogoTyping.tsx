@@ -28,17 +28,9 @@ const enLogoTyping = () => {
     }
   })
 
-  const keyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    const key = e.code;
-    if (key === 'Space') {
-      setSeconds(5)
-      setGameTime(60 + 5)
-    }
-  }
-
   // 現在出力している問題のカウント
   const [dataCount, setDataCount] = useState(0)
-  
+
   // 問題情報
   const data = logoData
   const answerImgData = data.map(item => item["url"])
@@ -48,40 +40,52 @@ const enLogoTyping = () => {
   // 現在入力しているテキスト
   const [currentText, setCurrentText] = useState("")
   // 現在入力している位置
-  const [position, setPosition] = useState(0)
+  const [position, setPosition] = useState(0)  
   
-  const playingKeyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    const key = e.key
-    // 入力したキーと現在入力しようとしている文字が一致するとき
-    if (key === answerText[position]) {
-      // 現在の文字を入力済とする
-      setCurrentText(currentText + key)
-      // まだ入力していない文字があるとき
-      if (position <= answerText.length - 2) {
-        // 次の位置へ移動
-        setPosition(position + 1)
-      }  
-      // 全ての文字を入力し終わったとき
-      if (position === answerText.length - 1) {
-        setDataCount(dataCount + 1)
-        if (dataCount < data.length - 1) {
-          // 次の問題あるとき次の問題を表示
-          answerImg = answerImgData[dataCount]
-          answerText = answerImgData[dataCount]
-        } else {
-          // 次の問題がないとき終了
-          setGameTime(null)
-        }
-        setCurrentText("")
-        setPosition(0)
+  const keyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
+
+    if (secs === 0 && !gameTime) {
+      if (e.code === 'Space') {
+        setSeconds(5)
+        setGameTime(60 + 5)
       }
     }
+
+    if (secs === 0 && gameTime) {
+      // 入力したキーと現在入力しようとしている文字が一致するとき
+      if (e.key === answerText[position]) {
+        // 現在の文字を入力済とする
+        setCurrentText(currentText + e.key)
+        // まだ入力していない文字があるとき
+        if (position <= answerText.length - 2) {
+          // 次の位置へ移動
+          setPosition(position + 1)
+        }  
+        // 全ての文字を入力し終わったとき
+        if (position === answerText.length - 1) {
+          setDataCount(dataCount + 1)
+          if (dataCount < data.length - 1) {
+            // 次の問題あるとき次の問題を表示
+            answerImg = answerImgData[dataCount]
+            answerText = answerImgData[dataCount]
+          } else {
+            // 次の問題がないとき終了
+            setGameTime(null)
+          }
+          setCurrentText("")
+          setPosition(0)
+        }
+      }
+    }
+
   }
 
-  
-
   return (
-    <div className='relative w-full h-[700px] overflow-hidden'>
+    <div
+      className='relative w-full h-[700px] overflow-hidden'
+      onKeyDown={keyDownHandler}
+      tabIndex={0}
+    >
         <LogoTypingBg/>
 
         {(secs > 0 && gameTime) && (
@@ -94,11 +98,7 @@ const enLogoTyping = () => {
         {(secs == 0 && gameTime) && (
           // ゲーム開始カウントダウン(secs) == 0 && ゲーム時間(gameTime) > 0
           // ゲームが始まっているとき
-          <div 
-            className='absolute w-full h-[700px] text-[2.5rem] font-medium text-white z-3 top-0'
-            onKeyDown={playingKeyDownHandler}
-            tabIndex={0}
-          >
+          <div className='absolute w-full h-[700px] text-[2.5rem] font-medium text-white z-3 top-0'>
             <div className='flex justify-between items-center p-4'>
               <div>あと&nbsp;<span className='text-[3.4rem]'>{data.length - dataCount}</span>問</div>
               <div>残り&nbsp;<span className='text-[3.4rem]'>{gameTime}</span>秒</div>
@@ -122,8 +122,6 @@ const enLogoTyping = () => {
           // ゲームが始まっていないとき
           <div 
             className='absolute w-full h-[700px] text-3xl font-medium z-3 flex flex-col justify-center items-center'
-            onKeyDown={keyDownHandler}
-            tabIndex={0}
           >
             <p className='enLogoTitle text-white mb-[100px]'>Engineer Logo Typing</p>
             <div className='text-center mb-10'>
