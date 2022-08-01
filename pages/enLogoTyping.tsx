@@ -137,13 +137,15 @@ const enLogoTyping = () => {
               <div>残り&nbsp;<span className='text-[3.4rem]'>{gameTime}</span>秒</div>
             </div>
             <div className='flex flex-col justify-center items-center mt-10'>
-              <Image
-                src={answerImg}
-                width={180}
-                height={180}
-                className="object-cover"
-                alt="LOGO"
-              />
+              <div className='p-5 bg-[#ffffffa8] rounded'>
+                <Image
+                  src={answerImg}
+                  width={180}
+                  height={180}
+                  className="object-cover"
+                  alt="LOGO"
+                />
+              </div>
 
               <div className='mt-10 text-[3rem] text-white'>{currentText}</div>
 
