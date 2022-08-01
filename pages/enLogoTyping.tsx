@@ -2,7 +2,10 @@ import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import LogoTypingBg from '../components/LogoTypingBg'
 import logoData from "../logoData"
+import Modal from 'react-modal'
 
+
+Modal.setAppElement('#modal')
 const enLogoTyping = () => {
 
   const [secs, setSeconds] = useState(0);
@@ -77,7 +80,29 @@ const enLogoTyping = () => {
         }
       }
     }
+  }
 
+  // modal
+  // モーダルを画面中央に表示する用のスタイル
+  const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      backgroundColor: "#ffffffb0",
+      transform: 'translate(-50%, -50%)',
+    },
+  }
+  const [modalIsOpen, setIsOpen] = useState<boolean>(false)
+
+  function openModal() {
+    setIsOpen(true)
+  }
+
+  function closeModal() {
+    setIsOpen(false)
   }
 
   return (
@@ -125,8 +150,36 @@ const enLogoTyping = () => {
           >
             <p className='enLogoTitle text-white mb-[100px]'>Engineer Logo Typing</p>
             <div className='text-center mb-10'>
-              <div className='cursor-pointer bg-black shadow-[#0f5] tracking-widest shadow text-white bg-opacity-75 rounded-full px-7 py-3 mb-10'>遊び方</div>
-              <div className='cursor-pointer bg-black shadow-[#0f5] tracking-widest shadow text-white bg-opacity-75 rounded-full px-7 py-3 mb-10'>設定</div>
+              <div
+                id='modal'
+                className='cursor-pointer bg-black shadow-[#0f5] tracking-widest shadow text-white bg-opacity-75 rounded-full px-7 py-3 mb-10'
+                onClick={openModal}
+              >
+                遊び方
+              </div>
+              <Modal
+                isOpen={modalIsOpen}
+                style={customStyles}
+                onRequestClose={closeModal}
+              >
+                <div className='w-[45vw] text-xl text-gray-500 font-[500] p-10'>
+                  <div className='flex flex-col gap-10 justify-center items-center'>
+                    <p>エンジニアならよく見かけるロゴの読み方を当ててタイピングするゲームです。</p>
+                    <p className='text-center text-white bg-[#0e5f1c] px-7 py-3 rounded'>
+                      全40で制限時間は60秒です
+                    </p>
+                    <p>
+                      ゲーム中は「ESCキー」でタイトルに戻ります。<br />
+                      「Spaceキー」で始められます。
+                    </p>
+                    <button onClick={closeModal} className="text-white bg-[#3f403f73] px-5 py-3 rounded-full">閉じる</button>
+                  </div>
+                </div>
+              </Modal>
+
+              <div className='cursor-pointer bg-black shadow-[#0f5] tracking-widest shadow text-white bg-opacity-75 rounded-full px-7 py-3 mb-10'>
+                設定
+              </div>
             </div>
             <div className='enLogoStart text-white tracking-wide'>Spaceキーでスタート</div>
           </div>
