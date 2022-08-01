@@ -5,43 +5,44 @@ import logoData from "../logoData"
 
 const enLogoTyping = () => {
 
-  // const [secs, setSeconds] = useState(0);
-  // const [gameTime, setGameTime] = useState<number | null>(null)
-  // useEffect(() => {
-  //   let sampleInterval = setInterval(() => {
-  //     if (secs > 0) {
-  //       setSeconds(secs - 1)
-  //     }
-  //     if (gameTime) {
-  //       setGameTime(gameTime - 1)
-  //     }
-  //     if (secs === 0) {
-  //       clearInterval(sampleInterval)
-  //     }
-  //     if (gameTime === 0) {
-  //       setGameTime(null)
-  //       clearInterval(sampleInterval)
-  //     }
-  //   }, 1000);
-  //   return () => {
-  //     clearInterval(sampleInterval)
-  //   }
-  // })
+  const [secs, setSeconds] = useState(0);
+  const [gameTime, setGameTime] = useState<number | null>(null)
+  useEffect(() => {
+    let sampleInterval = setInterval(() => {
+      if (secs > 0) {
+        setSeconds(secs - 1)
+      }
+      if (gameTime) {
+        setGameTime(gameTime - 1)
+      }
+      if (secs === 0) {
+        clearInterval(sampleInterval)
+      }
+      if (gameTime === 0) {
+        setGameTime(null)
+        clearInterval(sampleInterval)
+      }
+    }, 1000);
+    return () => {
+      clearInterval(sampleInterval)
+    }
+  })
 
-  // const keyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
-  //   const key = e.code;
-  //   if (key === 'Space') {
-  //     setSeconds(5)
-  //     setGameTime(60 + 5)
-  //   }
-  // }
+  const keyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const key = e.code;
+    if (key === 'Space') {
+      setSeconds(5)
+      setGameTime(60 + 5)
+    }
+  }
 
+  // 現在出力している問題のカウント
   const [dataCount, setDataCount] = useState(0)
+  
+  // 問題情報
   const data = logoData
-
   const answerImgData = data.map(item => item["url"])
   let answerImg = answerImgData[dataCount]
-
   const answerTextData = data.map(item => item["name"])
   let answerText = answerTextData[dataCount]
   // 現在入力しているテキスト
@@ -62,10 +63,15 @@ const enLogoTyping = () => {
       }  
       // 全ての文字を入力し終わったとき
       if (position === answerText.length - 1) {
-        // 次の問題を表示
         setDataCount(dataCount + 1)
-        answerImg = answerImgData[dataCount]
-        answerText = answerImgData[dataCount]
+        if (dataCount < data.length - 1) {
+          // 次の問題あるとき次の問題を表示
+          answerImg = answerImgData[dataCount]
+          answerText = answerImgData[dataCount]
+        } else {
+          // 次の問題がないとき終了
+          setGameTime(null)
+        }
         setCurrentText("")
         setPosition(0)
       }
@@ -78,24 +84,24 @@ const enLogoTyping = () => {
     <div className='relative w-full h-[700px] overflow-hidden'>
         <LogoTypingBg/>
 
-        {/* {(secs > 0 && gameTime) && (
+        {(secs > 0 && gameTime) && (
           // ゲーム開始カウントダウン(secs) > 0 && ゲーム時間(gameTime) > 0
           // ゲームは始まっていないがカウントダウンは始まっているとき
           <div className='absolute w-full h-[700px] text-[6rem] font-medium text-white z-3 flex flex-col justify-center items-center'>
             <p>{secs}</p>
           </div>
-        )} */}
-        {/* {(secs == 0 && gameTime) && ( */}
-          {/* // ゲーム開始カウントダウン(secs) == 0 && ゲーム時間(gameTime) > 0
-          // ゲームが始まっているとき */}
+        )}
+        {(secs == 0 && gameTime) && (
+          // ゲーム開始カウントダウン(secs) == 0 && ゲーム時間(gameTime) > 0
+          // ゲームが始まっているとき
           <div 
             className='absolute w-full h-[700px] text-[2.5rem] font-medium text-white z-3 top-0'
             onKeyDown={playingKeyDownHandler}
             tabIndex={0}
           >
             <div className='flex justify-between items-center p-4'>
-              <div>あと&nbsp;<span className='text-[3.4rem]'>40</span>問</div>
-              <div>残り&nbsp;<span className='text-[3.4rem]'>60</span>秒</div>
+              <div>あと&nbsp;<span className='text-[3.4rem]'>{data.length - dataCount}</span>問</div>
+              <div>残り&nbsp;<span className='text-[3.4rem]'>{gameTime}</span>秒</div>
             </div>
             <div className='flex flex-col justify-center items-center mt-10'>
               <Image
@@ -110,8 +116,8 @@ const enLogoTyping = () => {
 
             </div>
           </div>
-         {/* )} */}
-        {/* {(secs == 0 && !gameTime) && (
+         )}
+        {(secs == 0 && !gameTime) && (
           // ゲーム開始カウントダウン(secs) == 0 && ゲーム時間(gameTime) == null
           // ゲームが始まっていないとき
           <div 
@@ -126,7 +132,7 @@ const enLogoTyping = () => {
             </div>
             <div className='enLogoStart text-white tracking-wide'>Spaceキーでスタート</div>
           </div>
-        )} */}
+        )}
         
     </div>
   )
