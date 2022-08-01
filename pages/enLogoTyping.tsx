@@ -4,7 +4,6 @@ import LogoTypingBg from '../components/LogoTypingBg'
 import logoData from "../logoData"
 import Modal from 'react-modal'
 
-
 Modal.setAppElement('#modal')
 const enLogoTyping = () => {
 
@@ -21,19 +20,25 @@ const enLogoTyping = () => {
       if (secs === 0) {
         clearInterval(sampleInterval)
       }
-      if (gameTime === 0) {
-        setGameTime(null)
-        clearInterval(sampleInterval)
-      }
     }, 1000);
+    if (gameTime === 0) {
+      setResult(true)
+      setGameTime(null)
+      setCurrentText("")
+      setPosition(0)
+      setDataCount(0)
+    }
     return () => {
       clearInterval(sampleInterval)
     }
   })
 
+  // 結果画面を表示させるかの判定
+  const [result, setResult] = useState(false)
+  // 正解している問題数
+  const [correctCount, setCorrectCount] = useState(0)
   // 現在出力している問題のカウント
   const [dataCount, setDataCount] = useState(0)
-
   // 問題情報
   const data = logoData
   const answerImgData = data.map(item => item["url"])
@@ -46,11 +51,13 @@ const enLogoTyping = () => {
   const [position, setPosition] = useState(0)  
   
   const keyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (secs === 0 && !gameTime) {
+    if (secs === 0 && !gameTime && !result) {
+      // ゲームスタート
       if (e.code === 'Space') {
         setIsOpen(false)
         setSeconds(3)
         setGameTime(60 + 3)
+        setCorrectCount(0)
       }
     }
 
@@ -70,22 +77,29 @@ const enLogoTyping = () => {
         if (position <= answerText.length - 2) {
           // 次の位置へ移動
           setPosition(position + 1)
-        }  
+        }
         // 全ての文字を入力し終わったとき
         if (position === answerText.length - 1) {
           setDataCount(dataCount + 1)
+          setCorrectCount(correctCount + 1)
           if (dataCount < data.length - 1) {
             // 次の問題あるとき次の問題を表示
             answerImg = answerImgData[dataCount]
             answerText = answerImgData[dataCount]
           } else {
             // 次の問題がないとき終了
+            setResult(true)
             setGameTime(null)
             setDataCount(0)
           }
           setCurrentText("")
           setPosition(0)
         }
+      }
+    }
+    if (result) {
+      if (e.code === 'Escape') {
+        setResult(false)
       }
     }
   }
@@ -146,54 +160,58 @@ const enLogoTyping = () => {
                   alt="LOGO"
                 />
               </div>
-
               <div className='mt-10 text-[3rem] text-white'>{currentText}</div>
-
             </div>
           </div>
          )}
-        {(secs == 0 && !gameTime) && (
-          // ゲーム開始カウントダウン(secs) == 0 && ゲーム時間(gameTime) == null
-          // ゲームが始まっていないとき
-          <div 
-            className='absolute w-full h-[700px] text-3xl font-medium z-3 flex flex-col justify-center items-center'
-          >
-            <p className='enLogoTitle text-white mb-[100px]'>Engineer Logo Typing</p>
-            <div className='text-center mb-10'>
-              <div
-                id='modal'
-                className='cursor-pointer bg-black shadow-[#0f5] tracking-widest shadow text-white bg-opacity-75 rounded-full px-7 py-3 mb-10 hover:opacity-70'
-                onClick={openModal}
-              >
-                遊び方
-              </div>
-              <Modal
-                isOpen={modalIsOpen}
-                style={customStyles}
-                onRequestClose={closeModal}
-              >
-                <div className='w-[45vw] text-xl text-gray-500 font-[500] p-10'>
-                  <div className='flex flex-col gap-10 justify-center items-center'>
-                    <p>エンジニアならよく見かけるロゴの読み方を当ててタイピングするゲームです。</p>
-                    <p className='text-center text-white bg-[#0e5f1c] px-7 py-3 rounded'>
-                      全30問で制限時間は60秒です
-                    </p>
-                    <p>
-                      ゲーム中は「ESCキー」でタイトルに戻ります。<br />
-                      「Spaceキー」で始められます。
-                    </p>
-                    <button onClick={closeModal} className="text-white bg-[#3f403f73] px-5 py-3 rounded-full hover:opacity-70">閉じる</button>
-                  </div>
-                </div>
-              </Modal>
-
-              <div className='cursor-pointer bg-black shadow-[#0f5] tracking-widest shadow text-white bg-opacity-75 rounded-full px-7 py-3 mb-10 hover:opacity-70'>
-                設定
-              </div>
+           {/* ゲームを終了させたときの結果画面 */}
+        {result && (
+          <div className='absolute w-full h-[700px] text-[2rem] text-gray-800 font-medium z-3 flex flex-col justify-center items-center'>
+            <div className='p-5 flex flex-col justify-center items-center gap-5 bg-[#ffffffb0] rounded'>
+              <p>30問中<span className='text-[2.5rem]'>{correctCount}</span>問タイプしました。</p>
+              <button onClick={() => setResult(false)} className='text-white bg-[#3f403f73] px-5 py-3 rounded-full hover:opacity-70'>ホームに戻る</button>
+              <p>※ESCキーでホームに戻れます</p>
             </div>
-            <div className='enLogoStart text-white tracking-wide'>Spaceキーでスタート</div>
           </div>
         )}
+        {!result && 
+          (secs == 0 && !gameTime) && (
+            // ゲーム開始カウントダウン(secs) == 0 && ゲーム時間(gameTime) == null
+            // ゲームが始まっていないとき
+            <div className='absolute w-full h-[700px] text-3xl font-medium z-3 flex flex-col justify-center items-center'>
+              <p className='enLogoTitle text-white mb-[100px]'>Engineer Logo Typing</p>
+              <div className='text-center mb-10'>
+                <div
+                  id='modal'
+                  className='cursor-pointer bg-black shadow-[#0f5] tracking-widest shadow text-white bg-opacity-75 rounded-full px-7 py-3 mb-10 hover:opacity-70'
+                  onClick={openModal}
+                >
+                  遊び方
+                </div>
+                <Modal
+                  isOpen={modalIsOpen}
+                  style={customStyles}
+                  onRequestClose={closeModal}
+                >
+                  <div className='w-[45vw] text-xl text-gray-500 font-[500] p-10'>
+                    <div className='flex flex-col gap-10 justify-center items-center'>
+                      <p>エンジニアならよく見かけるロゴの読み方を当ててタイピングするゲームです。</p>
+                      <p className='text-center text-white bg-[#0e5f1c] px-7 py-3 rounded'>
+                        全30問で制限時間は60秒です
+                      </p>
+                      <p>
+                        ゲーム中は「ESCキー」でタイトルに戻ります。<br />
+                        「Spaceキー」で始められます。
+                      </p>
+                      <button onClick={closeModal} className="text-white bg-[#3f403f73] px-5 py-3 rounded-full hover:opacity-70">閉じる</button>
+                    </div>
+                  </div>
+                </Modal>
+              </div>
+              <div className='enLogoStart text-white tracking-wide'>Spaceキーでスタート</div>
+            </div>
+          )
+        }
         
     </div>
   )
