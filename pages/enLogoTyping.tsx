@@ -4,7 +4,6 @@ import LogoTypingBg from '../components/LogoTypingBg'
 import logoData from "../logoData"
 import Modal from 'react-modal'
 
-Modal.setAppElement('#modal')
 const enLogoTyping = () => {
 
   const [secs, setSeconds] = useState(0);
@@ -182,7 +181,6 @@ const enLogoTyping = () => {
               <p className='enLogoTitle text-white mb-[100px]'>Engineer Logo Typing</p>
               <div className='text-center mb-10'>
                 <div
-                  id='modal'
                   className='cursor-pointer bg-black shadow-[#0f5] tracking-widest shadow text-white bg-opacity-75 rounded-full px-7 py-3 mb-10 hover:opacity-70'
                   onClick={openModal}
                 >
@@ -192,6 +190,7 @@ const enLogoTyping = () => {
                   isOpen={modalIsOpen}
                   style={customStyles}
                   onRequestClose={closeModal}
+                  ariaHideApp={false}
                 >
                   <div className='w-[45vw] text-xl text-gray-500 font-[500] p-10'>
                     <div className='flex flex-col gap-10 justify-center items-center'>
