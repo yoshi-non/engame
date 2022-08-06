@@ -1,0 +1,48 @@
+const fourChoiceData = [
+    {
+        id: 1,
+        question: "正解のスペルはどれ？",
+        choiceA: "Github",
+        choiceB: "GitHub",
+        choiceC: "Git-hub",
+        choiceD: "Git-Hub",
+        answer: "GitHub",
+    },
+    {
+        id: 2,
+        question: "正解のスペルはどれ？",
+        choiceA: "Read Me",
+        choiceB: "READ Me",
+        choiceC: "readme",
+        choiceD: "README",
+        answer: "README",
+    },
+    {
+        id: 3,
+        question: "Gitのmasterブランチがmainブランチに切り替わった理由はどれ？",
+        choiceA: "バージョンをアップデートしたため",
+        choiceB: "差別用語だったため",
+        choiceC: "管理するのが難しくなったため",
+        choiceD: "意味が伝わりにくかったため",
+        answer: "差別用語だったため",
+    },
+    {
+        id: 4,
+        question: "Rubyの名前の由来はどれ？",
+        choiceA: "宝石のように輝く言語になってほしいとつけられた",
+        choiceB: "ダイヤモンドの次に強度が硬いため",
+        choiceC: "開発者の誕生石だから",
+        choiceD: "Perlの次になれるような言語になってほしいとつけられた",
+        answer: "Perlの次になれるような言語になってほしいとつけられた",
+    },
+    {
+        id: 5,
+        question: "HTTPステータスコードの説明として不正解はどれ？",
+        choiceA: "404 Not Found : Webページが見つからない",
+        choiceB: "500 Internal Server Error : 何らかのサーバ内で起きたエラー",
+        choiceC: "200 OK : リクエストが正常に処理できた",
+        choiceD: "302 Found : 恒久的に移動する",
+        answer: "302 Found : 恒久的に移動する",
+    },
+]
+export default fourChoiceData;

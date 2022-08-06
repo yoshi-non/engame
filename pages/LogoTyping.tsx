@@ -4,7 +4,7 @@ import LogoTypingBg from '../components/LogoTypingBg'
 import logoData from "../logoData"
 import Modal from 'react-modal'
 
-const EnLogoTyping = () => {
+const LogoTyping = () => {
 
   const [secs, setSeconds] = useState(0);
   const [gameTime, setGameTime] = useState<number | null>(null)
@@ -230,4 +230,4 @@ const EnLogoTyping = () => {
   )
 }
 
-export default EnLogoTyping
+export default LogoTyping
