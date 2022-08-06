@@ -4,7 +4,7 @@ import LogoTypingBg from '../components/LogoTypingBg'
 import logoData from "../logoData"
 import Modal from 'react-modal'
 
-const enLogoTyping = () => {
+const EnLogoTyping = () => {
 
   const [secs, setSeconds] = useState(0);
   const [gameTime, setGameTime] = useState<number | null>(null)
@@ -44,10 +44,23 @@ const enLogoTyping = () => {
   let answerImg = answerImgData[dataCount]
   const answerTextData = data.map(item => item["name"])
   let answerText = answerTextData[dataCount]
+  // 問題をランダムに出すようにする
+  function arrayShuffle(array: any) {
+    for(var i = (array.length - 1); 0 < i; i--){
+      // 0〜(i+1)の範囲で値を取得
+      var r = Math.floor(Math.random() * (i + 1));
+      // 要素の並び替えを実行
+      var tmp = array[i];
+      array[i] = array[r];
+      array[r] = tmp;
+    }
+    return array;
+  }
+  
   // 現在入力しているテキスト
   const [currentText, setCurrentText] = useState("")
   // 現在入力している位置
-  const [position, setPosition] = useState(0)  
+  const [position, setPosition] = useState(0)
   
   const keyDownHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (secs === 0 && !gameTime && !result) {
@@ -57,6 +70,7 @@ const enLogoTyping = () => {
         setSeconds(3)
         setGameTime(60 + 3)
         setCorrectCount(0)
+        arrayShuffle(data)
       }
     }
 
@@ -216,4 +230,4 @@ const enLogoTyping = () => {
   )
 }
 
-export default enLogoTyping
+export default EnLogoTyping
