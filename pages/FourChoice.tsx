@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import fourChoiceData from '../fourChoiceData';
+import Modal from 'react-modal'
 
 const FourChoice = () => {
   const [secs, setSeconds] = useState(0);
@@ -38,9 +39,15 @@ const FourChoice = () => {
   // ゲームスタート
 
   return (
-    <div className='relative w-full h-[700px] overflow-hidden bg-[#eed284]'>
+    <div className='relative w-full h-[700px] overflow-hidden bg-[#f5e4b7]'>
+
+      {/* カウントダウン表示 */}
+      {/* <div className='absolute w-full h-[700px] text-[6rem] font-medium text-white z-3 flex flex-col justify-center items-center'>
+        <p>{secs}</p>
+      </div> */}
+      
       {/* 問題表示画面 */}
-      <div className='absolute w-full h-[700px] text-[2.5rem] font-medium text-black z-3 flex flex-col justify-center items-center gap-5'>
+      {/* <div className='absolute w-full h-[700px] text-[2.5rem] font-medium text-black z-3 flex flex-col justify-center items-center gap-5'>
         <div className='flex justify-between items-center w-[80%]'>
           <p>01</p>
           <p>♥ ♥ ♥</p>
@@ -51,6 +58,42 @@ const FourChoice = () => {
         <p className='border-[4px] border-black text-center w-[80%] cursor-pointer'><span>③</span>{data[0].choiceC}</p>
         <p className='border-[4px] border-black text-center w-[80%] cursor-pointer'><span>④</span>{data[0].choiceD}</p>
         <div>10</div>
+      </div> */}
+
+      {/* ゲーム終了時結果画面 */}
+      {/* 後で記載 */}
+
+      {/* ホーム画面(ゲームが始まっていない) */}
+
+      <div className='absolute w-full h-[700px] text-[2.5rem] font-medium z-3 flex flex-col justify-center items-center gap-4'>
+        <p className='text-[4rem] font-bold'>エンジニア常識クイズ</p>
+        <div
+          className='border-[4px] border-black text-center w-[80%] cursor-pointer'
+          // onClick={openModal}
+        >
+            遊び方
+        </div>
+        <div className='border-[4px] border-black text-center w-[80%] cursor-pointer'>START</div>
+          {/* <Modal
+            isOpen={modalIsOpen}
+            style={customStyles}
+            onRequestClose={closeModal}
+            ariaHideApp={false}
+          >
+            <div className='w-[45vw] text-xl text-gray-500 font-[500] p-10'>
+              <div className='flex flex-col gap-10 justify-center items-center'>
+                <p>エンジニアならよく見かけるロゴの読み方を当ててタイピングするゲームです。</p>
+                <p className='text-center text-white bg-[#0e5f1c] px-7 py-3 rounded'>
+                  全30問で制限時間は60秒です
+                </p>
+                <p>
+                  ゲーム中は「ESCキー」でタイトルに戻ります。<br />
+                  「Spaceキー」で始められます。
+                </p>
+                <button onClick={closeModal} className="text-white bg-[#3f403f73] px-5 py-3 rounded-full hover:opacity-70">閉じる</button>
+              </div>
+            </div>
+          </Modal> */}
       </div>
     </div>
   )
