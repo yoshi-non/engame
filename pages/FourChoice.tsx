@@ -19,8 +19,8 @@ const FourChoice = () => {
         clearInterval(sampleInterval)
       }
     }, 1000);
-    // 問題数が3問正解したら終了
-    if (dataCount + 1 > 3) {
+    // 全問正解したら終了
+    if (dataCount + 1 > 10) {
       setGameOn(false)
       setDataCount(0)
     }
@@ -112,7 +112,7 @@ const FourChoice = () => {
       {(secs == 0 && gameOn) && (
         <div className='absolute w-full h-[700px] text-[2.5rem] font-medium text-black z-3 flex flex-col justify-center items-center gap-5'>
           <div className='flex justify-between items-center w-[80%]'>
-            <p>{dataCount + 1}/5</p>
+            <p>{dataCount + 1}/10</p>
             <p className='flex'>
               {"♥".repeat(gameLife)}
             </p>
@@ -154,7 +154,7 @@ const FourChoice = () => {
                 <div className='flex flex-col gap-10 justify-center items-center'>
                   <p>エンジニアの常識クイズです。</p>
                   <p className='text-center text-black bg-[#f5e4b7] px-7 py-3 rounded'>
-                    ※現在はテスト中のため5問になります。
+                    ※現在はテスト中のため10問になります。
                   </p>
                   <p>※ライフは3つありクイズで間違えるとライフが1つ減り0になるとゲームが終了します。</p>
                   <p>

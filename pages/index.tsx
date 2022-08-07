@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Sidebar from '../components/Sidebar'
 import logo from "../images/logo.png"
 import LogoTyping from "../images/LogoTyping.png"
+import FourChoice from "../images/FourChoice.png"
 
 const Home: NextPage = () => {
   return (
@@ -29,13 +30,13 @@ const Home: NextPage = () => {
             <div className='bg-gray-300 overflow-hidden p-2 border-black border group cursor-pointer transition duration-200 ease-in transform sm:hover:scale-105 hover:z-50'>
               <Image
                   layout='responsive'
-                  src={logo}
+                  src={FourChoice}
                   height={1080}
                   width={1920}
               />
               <div className="p-2">
-                  <p className="truncate max-w-md">text</p>
-                  <h2 className="mt-1 text-2xl text-white transition-all duration-100 ease-in-out group-hover:font-bold">title</h2>
+                  <p className="truncate max-w-md">2022.08.07</p>
+                  <h2 className="mt-1 text-xl text-white transition-all duration-100 ease-in-out group-hover:font-bold">エンジニア常識クイズ</h2>
               </div>
             </div>
           </Link>
