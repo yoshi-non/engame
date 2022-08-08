@@ -4,39 +4,16 @@ import Modal from 'react-modal'
 
 const FourChoice = () => {
 
-  const [secs, setSeconds] = useState(0);
+  // 問題が表示されるまでのカウントダウン
+  const [secs, setSeconds] = useState(0)
   // ライフ
-  const [gameLife, setGameLife] = useState(3);
+  const [gameLife, setGameLife] = useState(3)
   // 現在出力している問題のカウント
   const [dataCount, setDataCount] = useState(0)
-
-  useEffect(() => {
-    let sampleInterval = setInterval(() => {
-      if (secs > 0) {
-        setSeconds(secs - 1)
-      }
-      if (secs === 0) {
-        clearInterval(sampleInterval)
-      }
-    }, 1000);
-    // 全問正解したら終了
-    if (dataCount + 1 > 10) {
-      setGameOn(false)
-      setDataCount(0)
-    }
-    // ライフが0になったら終了
-    if (gameLife == 0) {
-      setGameOn(false)
-      setDataCount(0)
-    }
-    return () => {
-      clearInterval(sampleInterval)
-    }
-  })
   // ゲームが行えるかどうかの判定
-  const [gameOn, setGameOn] = useState(false);
+  const [gameOn, setGameOn] = useState(false)
   // 結果画面を表示させるかの判定
-  // const [result, setResult] = useState(false)
+  const [result, setResult] = useState(false)
   // 正解している問題数
   const [correctCount, setCorrectCount] = useState(0)
   // 問題情報
@@ -54,12 +31,39 @@ const FourChoice = () => {
   let currentChoiceD = choiceDataD[dataCount]
   const answerData = data.map(item => item["answer"])
   let currentAnswer = answerData[dataCount]
+
+  useEffect(() => {
+    let sampleInterval = setInterval(() => {
+      if (secs > 0) {
+        setSeconds(secs - 1)
+      }
+      if (secs === 0) {
+        clearInterval(sampleInterval)
+      }
+    }, 1000)
+    // 全問正解したら終了
+    if (dataCount + 1 > 10) {
+      setResult(true)
+    }
+    return () => {
+      clearInterval(sampleInterval)
+    }
+  })
+
   // ゲームスタート
   const gameStart = () => {
     setGameOn(true)
     setGameLife(3)
     setSeconds(3)
     setCorrectCount(0)
+    setDataCount(0)
+  }
+
+  // ゲーム終了
+  const gameFinish = () => {
+    setResult(false)
+    setGameOn(false)
+    setDataCount(0)
   }
   
   // 問題に答えた時の処理
@@ -70,10 +74,13 @@ const FourChoice = () => {
       setCorrectCount(correctCount + 1)
     } else {
       // 問題に間違えたとき
-      setDataCount(dataCount +1)
       setGameLife(gameLife - 1)
+      // ライフが0になったら終了
+      if (gameLife - 1 == 0) {
+        setResult(true)
+      }
+      setDataCount(dataCount +1)
     }
-    
   }
 
   // modal
@@ -109,7 +116,7 @@ const FourChoice = () => {
       </div>
       )}
       {/* 問題表示画面 */}
-      {(secs == 0 && gameOn) && (
+      {(secs == 0 && gameOn && !result && dataCount < 10) && (
         <div className='absolute w-full h-[700px] text-[2.5rem] font-medium text-black z-3 flex flex-col justify-center items-center gap-5'>
           <div className='flex justify-between items-center w-[80%]'>
             <p>{dataCount + 1}/10</p>
@@ -126,10 +133,21 @@ const FourChoice = () => {
       )}
 
       {/* ゲーム終了時結果画面 */}
-      {/* 後で記載 */}
+      {(secs == 0 && gameOn && result) && (
+        <div className='absolute w-full h-[700px] text-[2.5rem] font-medium z-3 flex flex-col justify-center items-center gap-4'>
+          <p className='text-[4rem] font-bold mb-5'>RESULT</p>
+          <p>10問中<span className='text-[3rem]'>{correctCount}</span>問正解しました。</p>
+          <button
+            onClick={gameFinish}
+            className='border-[4px] border-black text-center w-[80%] cursor-pointer'
+          >
+            ホームに戻る
+          </button>
+        </div>
+      )}
 
       {/* ホーム画面(ゲームが始まっていない) */}
-      {(secs == 0 && !gameOn) && (
+      {(secs == 0 && !gameOn && !result && dataCount == 0) && (
         <div className='absolute w-full h-[700px] text-[2.5rem] font-medium z-3 flex flex-col justify-center items-center gap-4'>
           <p className='text-[4rem] font-bold'>エンジニア常識クイズ</p>
           <div
@@ -158,7 +176,6 @@ const FourChoice = () => {
                   </p>
                   <p>※ライフは3つありクイズで間違えるとライフが1つ減り0になるとゲームが終了します。</p>
                   <p>
-                    ゲーム中は「ESCキー」でタイトルに戻ります。<br />
                     「STARTボタン」を押すと始められます。
                   </p>
                   <button onClick={closeModal} className="text-white bg-[#3f403f73] px-5 py-3 rounded-full hover:opacity-70">閉じる</button>
