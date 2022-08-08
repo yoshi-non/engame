@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import fourChoiceData from '../fourChoiceData';
 import Modal from 'react-modal'
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import ClearIcon from '@mui/icons-material/Clear';
 
 const FourChoice = () => {
 
@@ -16,6 +18,10 @@ const FourChoice = () => {
   const [result, setResult] = useState(false)
   // 正解している問題数
   const [correctCount, setCorrectCount] = useState(0)
+  // 正解エフェクト
+  const [correctEffect, setCorrectEffect] = useState(false)
+  // 不正解エフェクト
+  const [incorrectEffect, setIncorrectEffect] = useState(false)
   // 問題情報
   const data = fourChoiceData
   // 現在出力している問題情報
@@ -39,6 +45,12 @@ const FourChoice = () => {
       }
       if (secs === 0) {
         clearInterval(sampleInterval)
+      }
+      if (correctEffect) {
+        setCorrectEffect(false)
+      }
+      if (incorrectEffect) {
+        setIncorrectEffect(false)
       }
     }, 1000)
     // 全問正解したら終了
@@ -72,9 +84,13 @@ const FourChoice = () => {
       // 問題に正解したとき
       setDataCount(dataCount +1)
       setCorrectCount(correctCount + 1)
+      setCorrectEffect(true)
+      setIncorrectEffect(false)
     } else {
       // 問題に間違えたとき
       setGameLife(gameLife - 1)
+      setCorrectEffect(false)
+      setIncorrectEffect(true)
       // ライフが0になったら終了
       if (gameLife - 1 == 0) {
         setResult(true)
@@ -114,6 +130,18 @@ const FourChoice = () => {
       <div className='absolute w-full h-[700px] text-[6rem] font-medium z-3 flex flex-col justify-center items-center'>
         <p>{secs}</p>
       </div>
+      )}
+      {/* 正解エフェクト */}
+      {correctEffect && (
+        <div className='absolute w-full h-[700px] z-[-1] flex justify-center items-center text-red-600'>
+          <RadioButtonUncheckedIcon  style={{ fontSize: 320 }} className='correctEffect' />
+        </div>
+      )}
+      {/* 不正解エフェクト */}
+      {incorrectEffect && (
+        <div className='absolute w-full h-[700px] z-[-1] flex justify-center items-center text-red-600'>
+          <ClearIcon style={{ fontSize: 320 }} className='correctEffect' />
+        </div>
       )}
       {/* 問題表示画面 */}
       {(secs == 0 && gameOn && !result && dataCount < 10) && (

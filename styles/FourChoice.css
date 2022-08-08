@@ -1,0 +1,20 @@
+.correctEffect{
+    animation: answerEffect 1s;
+}
+
+@keyframes answerEffect {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+        z-index: 4;
+    }
+    70% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        z-index: -1;
+    }
+  }
+  

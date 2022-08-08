@@ -1,5 +1,6 @@
 import '../styles/globals.css'
 import '../styles/LogoTyping.css'
+import '../styles/FourChoice.css'
 import type { AppProps } from 'next/app'
 import Navbar from '../components/Navbar'
 
