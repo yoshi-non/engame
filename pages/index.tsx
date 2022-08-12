@@ -49,7 +49,7 @@ const Home = ({blog}: Props) => {
             <div className='flex justify-between p-3'>
               <p className='font-bold text-xl'>お知らせ</p>
               <Link href="/News">
-                <p className='text-theme text-xl font-bold'>全て見る</p>
+                <p className='text-theme text-xl font-bold cursor-pointer'>全て見る</p>
               </Link>
             </div>
             {blog.map(blog => (
