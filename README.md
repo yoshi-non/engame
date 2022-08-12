@@ -1,5 +1,9 @@
 # EnGame
 
-プロジェクト作成:npx create-next-app -e with-tailwindcss engame
-
 サーバ起動:yarn dev
+
+ビルド: yarn build
+
+ビルド後:yarn start
+
+デプロイ先:https://engame.vercel.app/
