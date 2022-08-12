@@ -6,4 +6,5 @@ export type Blog = {
     revisedAt: string
     title: string
     body: string
+    image?: string
 }
