@@ -18,7 +18,7 @@ const engameData = [
         title: "乞うご期待",
         date: "2022.08.??",
         thumbnail: "/logo.png",
-        url: "FourChoice",
+        url: "/",
     },
 ]
 
