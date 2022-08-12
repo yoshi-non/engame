@@ -44,6 +44,8 @@ const LogoTyping = () => {
   let answerImg = answerImgData[dataCount]
   const answerTextData = data.map(item => item["name"])
   let answerText = answerTextData[dataCount]
+  // 問題数
+  const questionLen = 30
   // 問題をランダムに出すようにする
   function arrayShuffle(array: any) {
     for(var i = (array.length - 1); 0 < i; i--){
@@ -95,7 +97,7 @@ const LogoTyping = () => {
         if (position === answerText.length - 1) {
           setDataCount(dataCount + 1)
           setCorrectCount(correctCount + 1)
-          if (dataCount < data.length - 1) {
+          if (dataCount < questionLen - 1) {
             // 次の問題あるとき次の問題を表示
             answerImg = answerImgData[dataCount]
             answerText = answerImgData[dataCount]
@@ -160,7 +162,7 @@ const LogoTyping = () => {
           // ゲームが始まっているとき
           <div className='absolute w-full h-[700px] text-[2.5rem] font-medium text-white z-3 top-0'>
             <div className='flex justify-between items-center p-4'>
-              <div>あと&nbsp;<span className='text-[3.4rem]'>{data.length - dataCount}</span>問</div>
+              <div>あと&nbsp;<span className='text-[3.4rem]'>{questionLen - dataCount}</span>問</div>
               <div>残り&nbsp;<span className='text-[3.4rem]'>{gameTime}</span>秒</div>
             </div>
             <div className='flex flex-col justify-center items-center mt-10'>
@@ -181,7 +183,7 @@ const LogoTyping = () => {
         {result && (
           <div className='absolute w-full h-[700px] text-[2rem] text-gray-800 font-medium z-3 flex flex-col justify-center items-center'>
             <div className='p-5 flex flex-col justify-center items-center gap-5 bg-[#ffffffb0] rounded'>
-              <p>30問中<span className='text-[2.5rem]'>{correctCount}</span>問タイプしました。</p>
+              <p>{questionLen}問中<span className='text-[2.5rem]'>{correctCount}</span>問タイプしました。</p>
               <button onClick={() => setResult(false)} className='text-white bg-[#3f403f73] px-5 py-3 rounded-full hover:opacity-70'>ホームに戻る</button>
               <p>※ESCキーでホームに戻れます</p>
             </div>
@@ -210,7 +212,7 @@ const LogoTyping = () => {
                     <div className='flex flex-col gap-10 justify-center items-center'>
                       <p>エンジニアならよく見かけるロゴの読み方を当ててタイピングするゲームです。</p>
                       <p className='text-center text-white bg-[#0e5f1c] px-7 py-3 rounded'>
-                        全30問で制限時間は60秒です
+                        全{questionLen}問で制限時間は60秒です
                       </p>
                       <p>
                         ゲーム中は「ESCキー」でタイトルに戻ります。<br />
