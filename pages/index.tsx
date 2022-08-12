@@ -52,7 +52,7 @@ const Home = ({blog}: Props) => {
                 <p className='text-theme text-xl font-bold cursor-pointer'>全て見る</p>
               </Link>
             </div>
-            {blog.map(blog => (
+            {blog.slice(0, 3).map(blog => (
               <div key={blog.id} className='bg-white p-3 border-b border-dotted border-gray-500'>
                 <p className='text-gray-500'>{blog.createdAt.slice(0 ,10 )}</p>
                 <h1 className='font-bold text-xl'>
