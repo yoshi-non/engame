@@ -24,12 +24,12 @@ const Navbar = () => {
                 <span className='text-[0.8em]'>最新情報</span>
             </div>
         </Link>
-        <Link href="/contact">
+        {/* <Link href="/contact">
             <div className='flex flex-col items-center justify-center cursor-pointer transition ease-in-out delay-150 duration-300 hover:opacity-50'>
                 <p className='italic font-bold text-theme text-2xl font-body'>CONTACT</p>
                 <span className='text-[0.8em]'>お問い合わせ</span>
             </div>
-        </Link>
+        </Link> */}
       </div>
     </div>
   )
