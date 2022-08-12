@@ -38,6 +38,9 @@ module.exports = {
       height: {
         '88vh': '88vh',
       },
+      fontFamily:{
+        'body': ['"Open Sans"']
+      },
     },
   },
   plugins: [],
