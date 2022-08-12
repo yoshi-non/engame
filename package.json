@@ -11,6 +11,7 @@
     "@mui/icons-material": "^5.8.4",
     "@mui/material": "^5.9.3",
     "@types/uuid": "^8.3.4",
+    "microcms-js-sdk": "^2.2.1",
     "next": "latest",
     "react": "18.1.0",
     "react-dom": "18.1.0"
