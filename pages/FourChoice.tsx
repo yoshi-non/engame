@@ -62,8 +62,23 @@ const FourChoice = () => {
     }
   })
 
+  // 問題をランダムに出すようにする
+  function arrayShuffle(array: any) {
+    for(var i = (array.length - 1); 0 < i; i--){
+      // 0〜(i+1)の範囲で値を取得
+      var r = Math.floor(Math.random() * (i + 1));
+      // 要素の並び替えを実行
+      var tmp = array[i];
+      array[i] = array[r];
+      array[r] = tmp;
+    }
+    return array;
+  }
+  
+
   // ゲームスタート
   const gameStart = () => {
+    arrayShuffle(data)
     setGameOn(true)
     setGameLife(3)
     setSeconds(3)
@@ -145,7 +160,7 @@ const FourChoice = () => {
       )}
       {/* 問題表示画面 */}
       {(secs == 0 && gameOn && !result && dataCount < 10) && (
-        <div className='absolute w-full h-[700px] text-[2.5rem] font-medium text-black z-3 flex flex-col justify-center items-center gap-5'>
+        <div className='absolute w-full h-[700px] text-[2.4rem] font-medium text-black z-3 flex flex-col justify-center items-center gap-5'>
           <div className='flex justify-between items-center w-[80%]'>
             <p>{dataCount + 1}/10</p>
             <p className='flex'>
