@@ -48,7 +48,7 @@ const Home = ({blog}: Props) => {
           <div className='flex flex-col justify-center'>
             <div className='flex justify-between p-3'>
               <p className='font-bold text-xl'>お知らせ</p>
-              <Link href="/news">
+              <Link href="/News">
                 <p className='text-theme text-xl font-bold'>全て見る</p>
               </Link>
             </div>

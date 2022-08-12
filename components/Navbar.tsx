@@ -12,7 +12,7 @@ const Navbar = () => {
         </div>
       </Link>
       <div className='relative flex gap-5 md:gap-10'>
-        <Link href="/news">
+        <Link href="/News">
             <div className='flex flex-col items-center justify-center cursor-pointer transition ease-in-out delay-150 duration-300 hover:opacity-50'>
                 <p className='italic font-bold text-theme text-2xl font-body'>NEWS</p>
                 <span className='text-[0.8em]'>最新情報</span>
