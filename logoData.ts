@@ -89,7 +89,7 @@ const logoData = [
         id: 15,
         name: "Vite",
         description: "Vite",
-        url: "/engame-icons/Vite.png",
+        url: "/engame-icons/vite.png",
     },
     {
         id: 16,
@@ -181,10 +181,6 @@ const logoData = [
         description: "electron",
         url: "/engame-icons/electron.png",
     },
-
-
-
-
 ]
 
 export default logoData;
